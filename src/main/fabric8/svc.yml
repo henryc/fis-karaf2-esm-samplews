@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: esm-samplews
+spec:
+  ports:
+    - port: 10082
+      targetPort: 10082
+  selector:
+    group: edu.ucla.it.esb
+    project: esm-samplews
+    provider: fabric8

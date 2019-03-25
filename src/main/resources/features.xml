@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features name="sample-features-repo" xmlns="http://karaf.apache.org/xmlns/features/v1.0.0">
+	<feature name="esm-samplews" version="4.0-SNAPSHOT">
+		<bundle>mvn:edu.ucla.it.esb/esm-samplews/4.0-SNAPSHOT</bundle>
+	</feature>
+</features>

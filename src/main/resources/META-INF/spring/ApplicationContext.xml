@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:camel="http://camel.apache.org/schema/spring" xmlns:cxf="http://camel.apache.org/schema/cxf"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:ctx="http://www.springframework.org/schema/context"
+	xmlns:cxfcore="http://cxf.apache.org/core" xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd    
+       http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+       http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+       http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+       http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd
+       http://www.springframework.org/schema/osgi-compendium http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<osgix:cm-properties id="sampleWsProps"
+		persistent-id="edu.ucla.it.esb.esm.samplews" />
+	<ctx:property-placeholder properties-ref="sampleWsProps" />
+	<!-- <ctx:property-placeholder/> -->
+
+	<cxfcore:bus bus="esmWSBus" id="esmWSBusId">
+		<cxfcore:properties>
+			<entry key="managed.bus.instance.id" value="esmWSCXFBus" />
+		</cxfcore:properties>
+	</cxfcore:bus>
+
+	<jaxws:endpoint xmlns:samplews="http://samplews.esm.esb.it.ucla.edu/wsdl/HelloWorld/"
+		id="sampleWs" address="http://0.0.0.0:${esb.app.ws.port}/esm/HelloWorld"
+		serviceName="samplews:HelloWorld" endpointName="samplews:SOAPOverHTTP"
+		implementor="#sampleWebServiceImpl" bus="esmWSBus">
+		<jaxws:properties>
+			<!-- setup the persistent instance id -->
+			<entry key="managed.instance.id" value="sampleWspid" />
+		</jaxws:properties>
+	</jaxws:endpoint>
+	<bean id="sampleWebServiceImpl" class="edu.ucla.it.esb.esm.samplews.SampleWebService">
+		<property name="delayResponse" value="${delayResponse}" />
+		<property name="delay" value="${delay}" />
+	</bean>
+
+</beans>
