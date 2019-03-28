@@ -12,5 +12,5 @@ spec:
               memory: 512Mi
           ports:
             - containerPort: 10082
-              name: samplews
+              name: esm-samplews
               protocol: TCP
