@@ -1,0 +1,72 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: esm-samplews
+  name: esm-samplews
+  selfLink: /apis/apps.openshift.io/v1/namespaces/karafsti/deploymentconfigs/esm-samplews
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: esm-samplews
+    deploymentconfig: esm-samplews
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        app: esm-samplews
+        deploymentconfig: esm-samplews
+    spec:
+      containers:
+      - image: esm-samplews:latest
+        imagePullPolicy: Always
+        name: esm-samplews
+        ports:
+        - containerPort: 10082
+          protocol: TCP
+        - containerPort: 8778
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - esm-samplews
+      from:
+        kind: ImageStreamTag
+        name: esm-samplews:latest
+        namespace: karafsti
+    type: ImageChange
+status:
+  availableReplicas: 0
+  latestVersion: 0
+  observedGeneration: 0
+  replicas: 0
+  unavailableReplicas: 0
+  updatedReplicas: 0
