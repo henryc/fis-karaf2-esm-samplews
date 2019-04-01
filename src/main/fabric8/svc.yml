@@ -7,6 +7,5 @@ spec:
     - port: 10082
       targetPort: 10082
   selector:
-    group: edu.ucla.it.esb
-    project: esm-samplews
-    provider: fabric8
+    app: esm-samplews
+    deploymentconfig: esm-samplews
