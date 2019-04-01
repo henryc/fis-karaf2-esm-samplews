@@ -24,6 +24,7 @@
     <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
     <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
     <fabric8.maven.plugin.version>3.1.80.redhat-000023</fabric8.maven.plugin.version>
+    <docker.port.container.ws>10082</docker.port.container.ws>
   </properties>
 
   <dependencyManagement>
